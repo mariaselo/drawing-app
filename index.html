@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria's Amazing Drawing App 🎨</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            font-size: 3em;
+        }
+        
+        .bear-container {
+            margin: 30px 0;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .realistic-bear {
+            width: 220px;
+            height: 300px;
+            position: relative;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .bear-container:hover .realistic-bear {
+            transform: scale(1.05);
+        }
+        
+        .bear-container:active .realistic-bear {
+            transform: scale(0.98);
+        }
+        
+        /* Realistic Bear Head */
+        .bear-head {
+            width: 140px;
+            height: 130px;
+            background: #8B4513;
+            border-radius: 45% 45% 35% 35%;
+            position: absolute;
+            top: 0;
+            left: 40px;
+            border: 3px solid #654321;
+            box-shadow: 
+                inset 0 15px 25px rgba(139, 69, 19, 0.3),
+                inset 0 -10px 15px rgba(101, 67, 33, 0.2);
+        }
+        
+        /* Bear Snout */
+        .bear-snout {
+            width: 80px;
+            height: 50px;
+            background: #DEB887;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            border: 2px solid #CD853F;
+            box-shadow: inset 0 5px 10px rgba(205, 133, 63, 0.3);
+        }
+        
+        /* Bear Ears */
+        .bear-ear {
+            width: 50px;
+            height: 50px;
+            background: #8B4513;
+            border-radius: 50%;
+            position: absolute;
+            border: 3px solid #654321;
+            box-shadow: inset 0 8px 15px rgba(101, 67, 33, 0.3);
+        }
+        
+        .bear-ear.left {
+            top: -20px;
+            left: 15px;
+            transform: rotate(-15deg);
+        }
+        
+        .bear-ear.right {
+            top: -20px;
+            right: 15px;
+            transform: rotate(15deg);
+        }
+        
+        .ear-inner {
+            width: 25px;
+            height: 25px;
+            background: #DEB887;
+            border-radius: 50%;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            border: 1px solid #CD853F;
+        }
+        
+        /* Realistic Bear Eyes */
+        .bear-eye {
+            width: 22px;
+            height: 22px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 45px;
+            border: 2px solid #333;
+        }
+        
+        .bear-eye.left {
+            left: 30px;
+        }
+        
+        .bear-eye.right {
+            right: 30px;
+        }
+        
+        .eye-shine {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+        }
+        
+        .eye-reflection {
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+        }
+        
+        /* Bear Nose */
+        .bear-nose {
+            width: 15px;
+            height: 10px;
+            background: #000;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: 85px;
+            left: 62px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Bear Mouth */
+        .bear-mouth {
+            width: 40px;
+            height: 20px;
+            border: 3px solid #000;
+            border-top: none;
+            border-radius: 0 0 25px 25px;
+            position: absolute;
+            top: 95px;
+            left: 50px;
+        }
+        
+        /* Realistic Bear Body */
+        .bear-body {
+            width: 120px;
+            height: 140px;
+            background: #8B4513;
+            border-radius: 50px 50px 40px 40px;
+            position: absolute;
+            top: 110px;
+            left: 50px;
+            border: 3px solid #654321;
+            box-shadow: 
+                inset 0 20px 30px rgba(139, 69, 19, 0.3),
+                inset 0 -15px 20px rgba(101, 67, 33, 0.2);
+        }
+        
+        /* Bear Belly */
+        .bear-belly {
+            width: 80px;
+            height: 100px;
+            background: #DEB887;
+            border-radius: 40px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 2px solid #CD853F;
+            box-shadow: inset 0 10px 15px rgba(205, 133, 63, 0.2);
+        }
+        
+        /* Realistic Bear Arms */
+        .bear-arm {
+            width: 35px;
+            height: 90px;
+            background: #8B4513;
+            border-radius: 18px;
+            position: absolute;
+            border: 3px solid #654321;
+            box-shadow: inset 0 10px 15px rgba(101, 67, 33, 0.3);
+        }
+        
+        .bear-arm.left {
+            top: 130px;
+            left: 8px;
+            transform: rotate(-25deg);
+        }
+        
+        .bear-arm.right {
+            top: 130px;
+            right: 8px;
+            transform: rotate(25deg);
+        }
+        
+        /* Bear Paws */
+        .bear-paw {
+            width: 30px;
+            height: 30px;
+            background: #654321;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -12px;
+            left: 2.5px;
+            border: 2px solid #4A4A4A;
+        }
+        
+        .paw-pad {
+            width: 12px;
+            height: 12px;
+            background: #DEB887;
+            border-radius: 50%;
+            position: absolute;
+            top: 9px;
+            left: 9px;
+        }
+        
+        .paw-toes {
+            position: absolute;
+            top: 2px;
+            left: 3px;
+        }
+        
+        .paw-toe {
+            width: 4px;
+            height: 6px;
+            background: #DEB887;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .paw-toe:nth-child(1) { top: 0; left: 4px; }
+        .paw-toe:nth-child(2) { top: -2px; left: 10px; }
+        .paw-toe:nth-child(3) { top: 0; left: 16px; }
+        
+        /* Realistic Bear Legs */
+        .bear-leg {
+            width: 40px;
+            height: 70px;
+            background: #8B4513;
+            border-radius: 20px;
+            position: absolute;
+            border: 3px solid #654321;
+            top: 220px;
+            box-shadow: inset 0 10px 15px rgba(101, 67, 33, 0.3);
+        }
+        
+        .bear-leg.left {
+            left: 65px;
+        }
+        
+        .bear-leg.right {
+            right: 65px;
+        }
+        
+        /* Bear Feet */
+        .bear-foot {
+            width: 45px;
+            height: 30px;
+            background: #654321;
+            border-radius: 25px;
+            position: absolute;
+            bottom: -12px;
+            left: -2.5px;
+            border: 2px solid #4A4A4A;
+        }
+        
+        .foot-pad {
+            width: 18px;
+            height: 12px;
+            background: #DEB887;
+            border-radius: 50%;
+            position: absolute;
+            top: 9px;
+            left: 13px;
+        }
+        
+        .foot-toes {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+        }
+        
+        .foot-toe {
+            width: 5px;
+            height: 8px;
+            background: #DEB887;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .foot-toe:nth-child(1) { top: 0; left: 2px; }
+        .foot-toe:nth-child(2) { top: -3px; left: 9px; }
+        .foot-toe:nth-child(3) { top: -3px; left: 16px; }
+        .foot-toe:nth-child(4) { top: 0; left: 23px; }
+        .foot-toe:nth-child(5) { top: 3px; left: 30px; }
+        
+        .instruction {
+            color: #fff;
+            font-size: 1.5em;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .start-btn {
+            padding: 20px 40px;
+            background: linear-gradient(45deg, #fab1a0, #fd79a8);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+        }
+        
+        .start-btn:active {
+            transform: translateY(0);
+        }
+        
+        .sparkle {
+            display: inline-block;
+            animation: sparkle 2s infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .bear-message {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            color: #2d3436;
+            font-size: 1.3em;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+            font-weight: bold;
+            border: 3px solid #fff;
+            white-space: nowrap;
+        }
+        
+        .bear-message.show {
+            opacity: 1;
+            top: -80px;
+        }
+        
+        .bear-message:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Maria's Amazing Drawing App! 🎨</h1>
+    
+    <div class="instruction">Click the bear! <span class="sparkle">✨</span></div>
+    
+    <div class="bear-container" onclick="changeBearColor()">
+        <div class="bear-message" id="bearMessage">Let's start drawing!</div>
+        <div class="realistic-bear" id="bear">
+            <!-- Realistic Bear Head -->
+            <div class="bear-head">
+                <!-- Bear Snout -->
+                <div class="bear-snout">
+                    <!-- Bear Nose -->
+                    <div class="bear-nose"></div>
+                    <!-- Bear Mouth -->
+                    <div class="bear-mouth"></div>
+                </div>
+                
+                <!-- Bear Ears -->
+                <div class="bear-ear left">
+                    <div class="ear-inner"></div>
+                </div>
+                <div class="bear-ear right">
+                    <div class="ear-inner"></div>
+                </div>
+                
+                <!-- Realistic Bear Eyes -->
+                <div class="bear-eye left">
+                    <div class="eye-shine"></div>
+                    <div class="eye-reflection"></div>
+                </div>
+                <div class="bear-eye right">
+                    <div class="eye-shine"></div>
+                    <div class="eye-reflection"></div>
+                </div>
+            </div>
+            
+            <!-- Realistic Bear Body -->
+            <div class="bear-body">
+                <div class="bear-belly"></div>
+            </div>
+            
+            <!-- Realistic Bear Arms -->
+            <div class="bear-arm left">
+                <div class="bear-paw">
+                    <div class="paw-pad"></div>
+                    <div class="paw-toes">
+                        <div class="paw-toe"></div>
+                        <div class="paw-toe"></div>
+                        <div class="paw-toe"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bear-arm right">
+                <div class="bear-paw">
+                    <div class="paw-pad"></div>
+                    <div class="paw-toes">
+                        <div class="paw-toe"></div>
+                        <div class="paw-toe"></div>
+                        <div class="paw-toe"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Realistic Bear Legs -->
+            <div class="bear-leg left">
+                <div class="bear-foot">
+                    <div class="foot-pad"></div>
+                    <div class="foot-toes">
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="bear-leg right">
+                <div class="bear-foot">
+                    <div class="foot-pad"></div>
+                    <div class="foot-toes">
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                        <div class="foot-toe"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="instruction">Ready to start drawing? <span class="sparkle">🌟</span></div>
+    
+    <button class="start-btn" onclick="startDrawing()">
+        🚀 Start Drawing! 🚀
+    </button>
+    
+    <script>
+        const allColors = [
+            '#8B4513', // brown (original)
+            '#FF6B6B', // red
+            '#FF9F43', // orange
+            '#FECA57', // yellow
+            '#48CA9F', // green
+            '#54A0FF', // blue
+            '#5F27CD', // purple
+            '#FF9FF3', // pink
+            '#00D2D3', // cyan
+            '#FF69B4', // hot pink
+            '#32CD32', // lime
+            '#FF4500', // red orange
+            '#9400D3', // violet
+            '#00FA9A', // spring green
+            '#FF6347', // tomato
+            '#4169E1', // royal blue
+            '#FFB347', // peach
+            '#98FB98', // pale green
+            '#DDA0DD', // plum
+            '#F0E68C', // khaki
+            '#87CEEB'  // sky blue
+        ];
+        
+        const bearMessages = [
+            "Let's start drawing!",
+            "I'm here to help you!",
+            "Let's make beautiful art!",
+            "Ready to create magic?",
+            "Art time is fun time!",
+            "Let's paint the world!",
+            "Draw your dreams!",
+            "Colors make me happy!",
+            "Let's be creative!",
+            "Art is amazing!"
+        ];
+        
+        let currentColorIndex = 0;
+        let currentMessageIndex = 0;
+        
+        function changeBearColor() {
+            const bear = document.getElementById('bear');
+            const message = document.getElementById('bearMessage');
+            const currentColor = allColors[currentColorIndex];
+            
+            // Change all bear brown parts to the new color
+            const bearHead = bear.querySelector('.bear-head');
+            const bearBody = bear.querySelector('.bear-body');
+            const bearArms = bear.querySelectorAll('.bear-arm');
+            const bearLegs = bear.querySelectorAll('.bear-leg');
+            const bearEars = bear.querySelectorAll('.bear-ear');
+            
+            bearHead.style.background = currentColor;
+            bearBody.style.background = currentColor;
+            bearArms.forEach(arm => arm.style.background = currentColor);
+            bearLegs.forEach(leg => leg.style.background = currentColor);
+            bearEars.forEach(ear => ear.style.background = currentColor);
+            
+            currentColorIndex = (currentColorIndex + 1) % allColors.length;
+            
+            // Change message text
+            message.textContent = bearMessages[currentMessageIndex];
+            currentMessageIndex = (currentMessageIndex + 1) % bearMessages.length;
+            
+            // Show message
+            message.classList.add('show');
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 2500);
+            
+            // Add bounce animation
+            bear.style.transform = 'scale(1.2) rotate(5deg)';
+            setTimeout(() => {
+                bear.style.transform = 'scale(1) rotate(0deg)';
+            }, 200);
+        }
+        
+        function startDrawing() {
+            window.location.href = 'drawing.html';
+        }
+    </script>
+</body>
+</html> 
