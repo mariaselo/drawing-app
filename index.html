@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria's Amazing Drawing App! 🎨</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1, #FFC0CB, #FFCCCB);
+            font-family: 'Comic Sans MS', cursive;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            animation: rainbowBackground 8s ease-in-out infinite;
+        }
+
+        @keyframes rainbowBackground {
+            0% { background: linear-gradient(45deg, #FF69B4, #FFB6C1, #FFC0CB, #FFCCCB); }
+            25% { background: linear-gradient(45deg, #98FB98, #90EE90, #8FBC8F, #87CEEB); }
+            50% { background: linear-gradient(45deg, #DDA0DD, #DA70D6, #BA55D3, #9370DB); }
+            75% { background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00, #FF6347); }
+            100% { background: linear-gradient(45deg, #FF69B4, #FFB6C1, #FFC0CB, #FFCCCB); }
+        }
+
+        .title {
+            font-size: 3em;
+            color: #FFFFFF;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+            text-align: center;
+            animation: titleBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .puss-container {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px;
+        }
+
+        .puss-container:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .puss-emoji {
+            font-size: 8em;
+            animation: pussFloat 3s ease-in-out infinite;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            padding: 30px;
+            border: 8px solid #FF69B4;
+            box-shadow: 0 8px 16px rgba(255,105,180,0.4);
+        }
+
+        @keyframes pussFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .puss-message {
+            background: linear-gradient(45deg, #FFB6C1, #FFF0F5);
+            color: #8B4513;
+            padding: 20px 30px;
+            border-radius: 25px;
+            border: 4px solid #FF69B4;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            max-width: 400px;
+        }
+
+        .start-instructions {
+            background: rgba(255,255,255,0.9);
+            color: #FF1493;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            border: 3px solid #FF69B4;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        🎨 Maria's Amazing Drawing App! 🎨
+    </div>
+    
+    <div class="puss-container" onclick="startDrawing()">
+        <div class="puss-emoji">🐱</div>
+        <div class="puss-message" id="pussMessage">
+            Click me to start drawing! ⚔️✨
+        </div>
+    </div>
+    
+    <div class="start-instructions">
+        Click Puss in Boots to enter the magical drawing world! 🌟
+    </div>
+
+    <script>
+        function startDrawing() {
+            // Show cute message
+            const messageEl = document.getElementById('pussMessage');
+            messageEl.textContent = "¡Vámonos! Let's create art! ⚔️🎨";
+            
+            // Redirect to drawing page
+            setTimeout(() => {
+                window.location.href = 'drawing.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html> 
