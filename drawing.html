@@ -32,6 +32,72 @@
             margin: 0 auto;
         }
 
+        /* Mobile phone styles for small screens */
+        @media (max-width: 768px) {
+            .drawing-container {
+                flex-direction: column;
+                gap: 10px;
+                padding: 5px;
+            }
+            
+            body {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.8em !important;
+                margin: 10px 0 !important;
+            }
+            
+            .controls-panel {
+                width: 100% !important;
+                padding: 15px !important;
+                margin-bottom: 10px;
+            }
+            
+            .canvas-container {
+                padding: 10px !important;
+            }
+            
+            #drawingCanvas {
+                width: 100% !important;
+                max-width: 350px !important;
+                height: 300px !important;
+            }
+            
+            .color-palette {
+                grid-template-columns: repeat(6, 1fr) !important;
+                gap: 5px !important;
+            }
+            
+            .color-option, .sticker-option {
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 1.2em !important;
+            }
+            
+            .control-group {
+                padding: 10px !important;
+                margin-bottom: 10px !important;
+            }
+            
+            .control-group h3 {
+                font-size: 1em !important;
+                margin-bottom: 8px !important;
+            }
+            
+            .brush-option {
+                padding: 6px 10px !important;
+                font-size: 0.8em !important;
+            }
+            
+            .cute-canvas-animal {
+                font-size: 25px !important;
+                width: 35px !important;
+                height: 35px !important;
+            }
+        }
+
         .controls-panel {
             background: rgba(255,255,255,0.9);
             padding: 20px;
