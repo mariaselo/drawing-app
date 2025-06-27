@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maria's Amazing Drawing App! 🎨</title>
     <style>
         body {
@@ -16,6 +16,12 @@
             justify-content: center;
             min-height: 100vh;
             animation: rainbowBackground 8s ease-in-out infinite;
+            /* Mobile-friendly settings */
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         @keyframes rainbowBackground {

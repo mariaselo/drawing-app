@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maria's Drawing Canvas! 🎨</title>
     <style>
         body {
@@ -11,6 +11,13 @@
             background: linear-gradient(45deg, #FFB6C1, #FFC0CB, #FFCCCB, #F0F8FF);
             font-family: 'Comic Sans MS', cursive;
             animation: backgroundShift 10s ease-in-out infinite;
+            /* Prevent scrolling and zooming on mobile */
+            touch-action: manipulation;
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         @keyframes backgroundShift {
@@ -54,6 +61,14 @@
             background: white;
             display: block;
             margin: 0 auto;
+            /* Prevent touch scrolling on canvas */
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .control-group {
@@ -590,12 +605,22 @@
             canvas = document.getElementById('drawingCanvas');
             ctx = canvas.getContext('2d');
             
-            // Set up drawing events
+            // Prevent scrolling and zooming on touch devices
+            canvas.addEventListener('touchstart', function(e) { e.preventDefault(); });
+            canvas.addEventListener('touchmove', function(e) { e.preventDefault(); });
+            canvas.addEventListener('touchend', function(e) { e.preventDefault(); });
+            
+            // Mouse events for computers
             canvas.addEventListener('mousedown', startDrawingOnCanvas);
             canvas.addEventListener('mousemove', drawOnCanvas);
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
             canvas.addEventListener('click', checkClickOnDrawing);
+            
+            // Touch events for tablets and phones
+            canvas.addEventListener('touchstart', startTouchDrawing);
+            canvas.addEventListener('touchmove', drawTouch);
+            canvas.addEventListener('touchend', stopDrawing);
         }
 
         function startDrawingOnCanvas(e) {
@@ -637,6 +662,43 @@
                     checkForAutomaticEating();
                 }, 800);
             }
+        }
+
+        // Touch functions for iPad and phones
+        function startTouchDrawing(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            
+            // If in sticker mode, place sticker instead of drawing
+            if (stickerMode && selectedSticker) {
+                placeSticker(x, y);
+                return;
+            }
+            
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function drawTouch(e) {
+            if (!isDrawing) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            
+            ctx.lineWidth = currentBrushSize;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = currentColor;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
         }
 
         // Animal eating system - TURNED OFF!
